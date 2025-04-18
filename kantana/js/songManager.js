@@ -1,4 +1,16 @@
 import { Firebase } from "./firebaseSetup.js";
+
+Swal.fire({
+    title: 'Processing songs...',
+    html: 'Please wait...',
+    allowOutsideClick: false,
+    background: "#1E1E1E",
+    color: "#FFFFFF",
+    didOpen: () => {
+        Swal.showLoading();
+    }
+});
+
 export class SongManager {
 
     constructor() {
@@ -11,6 +23,9 @@ export class SongManager {
         songManager.songlist = await firebase.getAllSongs();
         this.addSonglist();
         await firebase.updateSonglistNumber(this.songlist.length);
+
+        // Once complete, close the dialog.
+        Swal.close();
     }
 
     async refresh() {
