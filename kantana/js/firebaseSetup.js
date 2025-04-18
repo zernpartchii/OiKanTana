@@ -14,7 +14,9 @@ const firebaseConfig = {
     measurementId: "G-7NN0KENB0F"
 };
 
-const path = "OiKanTana", pathCodes = "Codes";
+const path = "OiKanTana", pathCodes = "Codes", sessionCode = localStorage.getItem("sessionCode");
+
+let time;
 
 export class Firebase {
     constructor(sessionCode) {
@@ -22,6 +24,18 @@ export class Firebase {
         this.db = getDatabase(this.app);
         this.sessionCode = sessionCode;
         this.allSongs = [];
+    }
+
+    async fetchTime() {
+        const timeRef = ref(this.db, `${path}/Time`);
+        onValue(timeRef, async (snapshot) => {
+            if (snapshot.exists()) {
+                time = snapshot.val();
+            } else {
+                time = 3;
+                await update(ref(this.db, `${path}`), { Time: time });
+            }
+        });
     }
 
     async createVideoId(videoId, nameRef, username = '') {
@@ -110,7 +124,6 @@ export class Firebase {
     readVideoID() {
         try {
             const songManager = new SongManager();
-            const sessionCode = localStorage.getItem("sessionCode");
             const sessionRefPlay = ref(this.db, `${path}/${pathCodes}/${sessionCode}/Playlist`);
             onValue(sessionRefPlay, (snapshot) => {
                 if (snapshot.exists()) {
@@ -290,6 +303,7 @@ export class Firebase {
 
     async verifySessionCode(type, codes = '') {
         try {
+            await this.fetchTime();
             const sessionCode = `${type === "autoCleanup" ? codes : this.sessionCode}`;
             const sessionRef = ref(this.db, `${path}/${pathCodes}/${sessionCode}`);
             const sessionSnap = await get(sessionRef);
@@ -307,7 +321,7 @@ export class Firebase {
                 const startTime = sessionSnap.val().startTime;
                 const currentTime = Date.now();
                 const timeElapsed = currentTime - startTime;
-                const maxSessionTime = 3 * 60 * 60 * 1000; // 3 hours in milliseconds
+                const maxSessionTime = time * 60 * 60 * 1000; // 3 hours in milliseconds
                 const timeLeft = maxSessionTime - timeElapsed;
 
                 if (timeLeft > 0) {
@@ -362,7 +376,7 @@ export class Firebase {
         }
     }
 
-    startFirebaseTimer(startTime, sessionCode, duration = 60 * 180) {
+    startFirebaseTimer(startTime, sessionCode, duration = 60 * 60 * time) {
         async function updateTimer() {
             let elapsedTime = Math.floor((Date.now() - startTime) / 1000);
             let remainingTime = duration - elapsedTime;
@@ -435,7 +449,6 @@ export class Firebase {
     async updateVideoState(Video) {
         // 📌 2️⃣ Update Data in Real-time
         if (Video) {
-            const sessionCode = localStorage.getItem("sessionCode");
             await update(ref(this.db, `${path}/${pathCodes}/${sessionCode}`), { Video });
         }
     }
@@ -461,7 +474,6 @@ export class Firebase {
 
     async readVideoState() {
         try {
-            const sessionCode = localStorage.getItem("sessionCode");
             const sessionRef = ref(this.db, `${path}/${pathCodes}/${sessionCode}/Video`);
             onValue(sessionRef, (snapshot) => {
                 if (snapshot.exists()) {

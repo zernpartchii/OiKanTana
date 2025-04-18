@@ -25,7 +25,7 @@
 <body>
     <div class="h-screen">
         <div class="flex h-full mainContent p-4">
-            <div class="w-1/4 p-3 flex flex-col gap-3 relative" id="sidebar">
+            <div class="w-1/4 px-3 flex flex-col gap-3 relative" id="sidebar">
                 <div class="flex gap-2 items-center">
                     <button class="btnRefresh hidden">
                         <span
@@ -102,7 +102,7 @@
                         <span class="material-symbols-outlined text-orange-500 cursor-pointer">
                             share
                         </span>
-                        <span id="share" class="cursor-pointer text-white">Share</span>
+                        <span id="share" class="cursor-pointer text-white">Share link: oikantana.22web.org</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-3">

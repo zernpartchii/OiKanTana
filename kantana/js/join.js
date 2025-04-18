@@ -6,6 +6,8 @@ const btnJoin = document.querySelector('.btnJoin');
 let code = localStorage.getItem("sessionCode");
 let type = localStorage.getItem("type");
 
+if (type == "creator" || type == "joiner") window.location.href = `./kantana/`; // Redirect with session code ;
+
 if (code && type) {
     redirect(code, type);
 } else {
@@ -105,7 +107,7 @@ function isValidName(str) {
     return nameRegex.test(trimmed);
 }
 
-function generateRandomCode(length = 8) {
+function generateRandomCode(length = 6) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let code = '';
     for (let i = 0; i < length; i++) {
