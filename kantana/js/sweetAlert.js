@@ -27,6 +27,7 @@ class ShowMessage {
         return Swal.fire({
             showConfirmButton: true,
             allowOutsideClick: false, // ✅ Disables outside clicking
+            allowEnterKey: false,
             icon: this.#icon,
             title: this.#message,
             background: "#1E1E1E",
@@ -44,6 +45,7 @@ class ShowMessage {
             color: "#FFFFFF", // white text
             timer: false,
             toast: true,
+            allowEnterKey: false,
             allowOutsideClick: false, // ✅ Disables outside clicking
             icon: this.#icon,
             title: this.#message,
