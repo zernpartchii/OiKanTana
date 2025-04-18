@@ -45,7 +45,7 @@ export class Firebase {
                 if (getSong) {
                     switch (getSong.error) {
                         case "not_embeddable":
-                            new ShowMessage("error", "Opps! Can't add Song. This video is not embeddable!")
+                            new ShowMessage("error", "Opps! Can't add this Song. This video is not embeddable!")
                                 .showToastOK().then((confirmed) => {
                                     if (confirmed) {
                                         return;

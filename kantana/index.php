@@ -24,7 +24,7 @@
 
 <body>
     <div class="h-screen">
-        <div class="flex h-full mainContent p-4">
+        <div class="flex gap-3 h-full mainContent p-4">
             <div class="w-1/4 px-3 flex flex-col gap-3 relative" id="sidebar">
                 <div class="flex gap-2 items-center">
                     <button class="btnRefresh hidden">

@@ -23,9 +23,6 @@ export class SongManager {
         songManager.songlist = await firebase.getAllSongs();
         this.addSonglist();
         await firebase.updateSonglistNumber(this.songlist.length);
-
-        // Once complete, close the dialog.
-        Swal.close();
     }
 
     async refresh() {
@@ -547,4 +544,7 @@ setInterval(() => {
         youtube.stopVideoPlaying();
     }
 }, 3000);
+
+// Once complete, close the dialog.
+Swal.close();
 
