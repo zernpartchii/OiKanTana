@@ -476,6 +476,8 @@ export class YouTubePlayer {
         if (songManager.playlist.length > 0) {
             let currentVideoId = songManager.playlist[0].videoId;
             let videoTime = this.player.getCurrentTime() || 0;
+            localStorage.setItem("currentVideoId", currentVideoId);
+            localStorage.setItem("videoTime", videoTime);
             await firebase.updateVideoState({ currentVideoId: currentVideoId, videoTime: videoTime });
             console.log('Code: ' + this.currentSong.currentVideoId, 'Time: ' + this.currentSong.videoTime);
         }

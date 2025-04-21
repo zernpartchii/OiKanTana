@@ -480,8 +480,6 @@ export class Firebase {
                     const youtube = new YouTubePlayer();
                     const currentVideoId = snapshot.val().currentVideoId;
                     const videoTime = snapshot.val().videoTime;
-                    localStorage.setItem("currentVideoId", currentVideoId);
-                    localStorage.setItem("videoTime", videoTime);
                     youtube.setCurrentSong({ currentVideoId: currentVideoId, videoTime: videoTime });
                 }
             });
